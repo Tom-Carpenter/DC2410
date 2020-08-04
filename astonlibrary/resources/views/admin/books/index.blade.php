@@ -78,7 +78,7 @@
     <thead>
       <tr>
         <th scope="col">@sortablelink('id') </th>
-        <!-- <th scope="col">picture carousel column</th> -->
+        <th scope="col"></th> 
         <th scope="col">@sortablelink('name')</th>
         <th scope="col">Description</th>
         <th scope="col">@sortablelink('price')</th>
@@ -96,6 +96,21 @@
       @foreach($books as $key => $book)
       <tr>
         <th scope="row">{{{$book->id}}}</th>
+        <?php 
+    if($book->images() != null){
+        $images = $book->images()->get()->pluck('name');
+    }
+    ?>
+     <td>
+      @if(!empty($images))
+        <img  style="float: left;
+    width:  12vw;
+    height: 40vh;
+    object-fit: cover;"
+          src="https://astonbookstore.s3.eu-west-2.amazonaws.com/{{$images[0]}}" alt="pic">
+      @endif
+
+  </td>
         <td><a class="text-info" href="{{route('admin.books.show',$book->id)}}">{{{$book->name}}}</a></td>
         <td>{{{$book->description}}}</td>
         <td>{{{$book->price}}}</td>
